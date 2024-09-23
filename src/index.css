@@ -2,6 +2,7 @@ body,
 html,
 #root {
   height: 100vh;
+  background-color: teal;
 }
 #root {
   background-color: teal;
