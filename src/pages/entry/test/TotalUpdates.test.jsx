@@ -42,7 +42,8 @@ test('Updates toppings subtotal when toopings are checked and unchecked', async 
   expect(toppingsSubtotal).toHaveTextContent('$1.50')
 
   // tick another box on, assert on subtotal
-  const hotFudgeCheckbox = await screen.findByRole('checkbox', { name: /hot fudge/i })
+  // Não precisou ser asincrono pois a tela já tinha carregado
+  const hotFudgeCheckbox = screen.getByRole('checkbox', { name: /hot fudge/i })
   await user.click(hotFudgeCheckbox)
   expect(toppingsSubtotal).toHaveTextContent('$3.00')
 

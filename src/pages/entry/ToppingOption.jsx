@@ -17,7 +17,7 @@ export default function ToppingOption({ name, imagePath }) {
       <Col>
         <label htmlFor={name}>
           {name}
-          <input type="checkbox" name={name} id={name} onChange={handleCheckBoxChange} />
+          <input type="checkbox" id={name} onChange={handleCheckBoxChange} />
         </label>
       </Col>
     </>
