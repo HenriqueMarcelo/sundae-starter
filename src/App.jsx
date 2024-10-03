@@ -8,7 +8,7 @@ function App() {
     <Container>
       <OrderDetailsProvider>
         <OrderEntry />
-        <OrderSummary />
+        {/* <OrderSummary /> */}
       </OrderDetailsProvider>
     </Container>
   )
