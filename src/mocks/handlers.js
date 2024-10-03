@@ -1,34 +1,38 @@
 // src/mocks/handlers.js
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from 'msw'
 
 export const handlers = [
-  http.get("http://localhost:3030/scoops", () => {
+  http.get('http://localhost:3030/scoops', () => {
     return HttpResponse.json([
       {
-        name: "Chocolate",
-        imagePath: "/image/chocolate.png",
+        name: 'Chocolate',
+        imagePath: '/image/chocolate.png',
       },
       {
-        name: "Vanilla",
-        imagePath: "/image/vanilla.png",
+        name: 'Vanilla',
+        imagePath: '/image/vanilla.png',
       },
-    ]);
+      {
+        name: 'Mint chip',
+        imagePath: '/image/mint-chip.png',
+      },
+    ])
   }),
 
-  http.get("http://localhost:3030/toppings", () => {
+  http.get('http://localhost:3030/toppings', () => {
     return HttpResponse.json([
       {
-        name: "Cherries",
-        imagePath: "/images/cherries.png",
+        name: 'Cherries',
+        imagePath: '/images/cherries.png',
       },
       {
-        name: "M&Ms",
-        imagePath: "/images/m-and-ms.png",
+        name: 'M&Ms',
+        imagePath: '/images/m-and-ms.png',
       },
       {
-        name: "Hot fudge",
-        imagePath: "/images/hot-fudge.png",
+        name: 'Hot fudge',
+        imagePath: '/images/hot-fudge.png',
       },
-    ]);
+    ])
   }),
-];
+]

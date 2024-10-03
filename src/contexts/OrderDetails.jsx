@@ -45,6 +45,7 @@ export function OrderDetailsProvider({ children, ...props }) {
   const totals = {
     scoops: calculateTotal('scoops'),
     toppings: calculateTotal('toppings'),
+    total: calculateTotal('scoops') + calculateTotal('toppings'),
   }
 
   return (

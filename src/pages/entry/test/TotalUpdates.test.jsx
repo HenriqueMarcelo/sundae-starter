@@ -1,6 +1,8 @@
-import { render, screen } from '../../../test-utils/testing-library-utils'
+// eslint-disable-next-line no-unused-vars
+import { logRoles, render, screen } from '../../../test-utils/testing-library-utils'
 import Options from '../Options'
 import userEvent from '@testing-library/user-event'
+import { OrderEntry } from '../OrderEntry'
 
 test('updates scoop subtotal when scoops change', async () => {
   const user = userEvent.setup()
@@ -53,8 +55,60 @@ test('Updates toppings subtotal when toopings are checked and unchecked', async 
 })
 
 describe('grand total', () => {
-  test('grand total starts at $0.00', () => {})
-  test('grand total updates properly if scoop is added first', () => {})
-  test('grand total updates properly if topping is added first', () => {})
-  test('grand total updates properly if item is removed', () => {})
+  test('grand total starts at $0.00', () => {
+    render(<OrderEntry />)
+    const grandTotalElement = screen.getByRole('heading', { name: /grand total: /i })
+
+    expect(grandTotalElement).toHaveTextContent('$0.00')
+  })
+
+  test('grand total updates properly if scoop is added first', async () => {
+    // eslint-disable-next-line no-unused-vars
+    const { container } = render(<OrderEntry />)
+    // logRoles(container)
+    const user = await userEvent.setup()
+    const grandTotalElement = screen.getByRole('heading', { name: /grand total: /i })
+
+    const chocolateScoopElement = await screen.findByRole('spinbutton', { name: /chocolate/i })
+    await user.clear(chocolateScoopElement)
+    await user.type(chocolateScoopElement, '1')
+    expect(grandTotalElement).toHaveTextContent('$2.00')
+
+    const hotFudgeToppingElement = await screen.findByRole('checkbox', { name: /hot fudge/i })
+    await user.click(hotFudgeToppingElement)
+    expect(grandTotalElement).toHaveTextContent('$3.50')
+  })
+
+  test('grand total updates properly if topping is added first', async () => {
+    render(<OrderEntry />)
+    const user = await userEvent.setup()
+    const grandTotalElement = await screen.findByRole('heading', { name: /grand total: /i })
+
+    const hotFudgeToppingElement = await screen.findByRole('checkbox', { name: /hot fudge/i })
+    await user.click(hotFudgeToppingElement)
+
+    const chocolateScoopElement = await screen.findByRole('spinbutton', { name: /chocolate/i })
+    await user.clear(chocolateScoopElement)
+    await user.type(chocolateScoopElement, '1')
+
+    expect(grandTotalElement).toHaveTextContent('$3.50')
+  })
+
+  test('grand total updates properly if item is removed', async () => {
+    render(<OrderEntry />)
+    const user = await userEvent.setup()
+    const grandTotalElement = await screen.findByRole('heading', { name: /grand total: /i })
+
+    const hotFudgeToppingElement = await screen.findByRole('checkbox', { name: /hot fudge/i })
+    await user.click(hotFudgeToppingElement)
+
+    const chocolateScoopElement = await screen.findByRole('spinbutton', { name: /chocolate/i })
+    await user.clear(chocolateScoopElement)
+    await user.type(chocolateScoopElement, '2')
+
+    await user.clear(chocolateScoopElement)
+    await user.type(chocolateScoopElement, '1')
+
+    expect(grandTotalElement).toHaveTextContent('$3.50')
+  })
 })
