@@ -1,5 +1,5 @@
 // src/mocks/handlers.js
-import { http, HttpResponse } from 'msw'
+import { delay, http, HttpResponse } from 'msw'
 
 export const handlers = [
   http.get('http://localhost:3030/scoops', () => {
@@ -34,5 +34,10 @@ export const handlers = [
         imagePath: '/images/hot-fudge.png',
       },
     ])
+  }),
+
+  http.post('http://localhost:3030/?', async () => {
+    await delay(400)
+    return HttpResponse.json(true, { status: 201 })
   }),
 ]

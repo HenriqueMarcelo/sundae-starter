@@ -2,6 +2,20 @@ import { render } from '@testing-library/react'
 import App from '../App'
 
 test('order phases for happy path', () => {
+  /*
+   * Debug tips
+   *
+   * screen.debug() // show html at that point
+   *
+   * const { container } = render(<App/>)
+   * logRoles(container)
+   *
+   * await findBy !== getBy
+   *
+   * userEvent method should be awaited
+   *
+   */
+
   // render the app
   render(<App />)
 
