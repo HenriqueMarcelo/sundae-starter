@@ -36,11 +36,17 @@ test('order phases for happy path', async () => {
 
   // check if summary information is correct base on order
 
+  const summaryHeading = screen.getByRole('heading', { name: /order summary/i })
+  expect(summaryHeading).toBeInTheDocument()
+
   const scoopsTotal = screen.getByText('Scoops: $', { exact: false })
   expect(scoopsTotal).toHaveTextContent('2.00')
 
   const toppingsTotal = screen.getByText('Toppings: $', { exact: false })
   expect(toppingsTotal).toHaveTextContent('1.50')
+
+  expect(screen.getByText('1 Vanilla')).toBeInTheDocument()
+  expect(screen.getByText('Hot fudge')).toBeInTheDocument()
 
   // accept terms and conditions and click button to confirm order
 
@@ -48,7 +54,16 @@ test('order phases for happy path', async () => {
   await user.click(termsCheckbox)
 
   const confirmButton = screen.getByRole('button', { name: /confirm order/i })
-  await user.click(confirmButton) // problema
+  await user.click(confirmButton)
+
+  // Expect "loading" to show
+
+  const loading = screen.getByText(/loading/i)
+  expect(loading).toBeInTheDocument()
+
+  // check confirmation page text
+  const thankYouHeader = await screen.findByRole('heading', { name: /thank you/i })
+  expect(thankYouHeader).toBeInTheDocument()
 
   // confirm order number on confirmation page
 

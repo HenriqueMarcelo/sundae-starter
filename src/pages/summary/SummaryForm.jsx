@@ -18,13 +18,8 @@ const checkboxLabel = (
   </span>
 )
 
-export function SummaryForm({ setOrderPhase }) {
+export function SummaryForm({ handleSubmit }) {
   const [tcChecked, setTcChecked] = useState(false)
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    setOrderPhase('complete')
-  }
 
   return (
     <Form onSubmit={handleSubmit}>
