@@ -2,7 +2,7 @@ import { useOrderDetails } from '../../contexts/OrderDetails'
 import { formatCurrency } from '../../utilities'
 import Options from './Options'
 
-export function OrderEntry() {
+export function OrderEntry({ setOrderPhase }) {
   const {
     totals: { total },
   } = useOrderDetails()
@@ -13,7 +13,7 @@ export function OrderEntry() {
       <Options optionType="toppings" />
 
       <h2>Grand total: {formatCurrency(total)}</h2>
-      <button>Order Sundae!</button>
+      <button onClick={() => setOrderPhase('review')}>Order Sundae!</button>
     </div>
   )
 }

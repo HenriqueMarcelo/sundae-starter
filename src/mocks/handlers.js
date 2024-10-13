@@ -36,8 +36,8 @@ export const handlers = [
     ])
   }),
 
-  http.post('http://localhost:3030/?', async () => {
+  http.post('http://localhost:3030/order', async () => {
     await delay(400)
-    return HttpResponse.json(true, { status: 201 })
+    return HttpResponse.json({ orderNumber: 123 }, { status: 201 })
   }),
 ]

@@ -8,7 +8,7 @@ export function useOrderDetails() {
   const contextValue = useContext(OrderDetailsContext)
 
   if (!contextValue) {
-    throw new Error('useOrderDetails must be colled from within an OrderDetailsProvider')
+    throw new Error('useOrderDetails must be called from within an OrderDetailsProvider')
   }
 
   return contextValue
