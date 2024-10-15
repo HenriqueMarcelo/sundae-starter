@@ -1,25 +1,13 @@
-import { useState } from 'react'
 import { useOrderDetails } from '../../contexts/OrderDetails'
 import { formatCurrency } from '../../utilities'
 import { SummaryForm } from './SummaryForm'
-import axios from 'axios'
 
 export function OrderSummary({ setOrderPhase }) {
   const { totals, optionCounts } = useOrderDetails()
-  const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
-
-    setIsLoading(true)
-    await axios.post('http://localhost:3030/order', { optionCounts })
-    setIsLoading(false)
-
     setOrderPhase('complete')
-  }
-
-  if (isLoading) {
-    return <p>Loading...</p>
   }
 
   const scoopArray = Object.entries(optionCounts.scoops) // [["chocolate", 2], ["vanilla", 1]]
