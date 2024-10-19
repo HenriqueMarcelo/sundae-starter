@@ -4,7 +4,7 @@ import Options from './Options'
 
 export function OrderEntry({ setOrderPhase }) {
   const {
-    totals: { total },
+    totals: { total, scoops },
   } = useOrderDetails()
   return (
     <div>
@@ -13,7 +13,9 @@ export function OrderEntry({ setOrderPhase }) {
       <Options optionType="toppings" />
 
       <h2>Grand total: {formatCurrency(total)}</h2>
-      <button onClick={() => setOrderPhase('review')}>Order Sundae!</button>
+      <button onClick={() => setOrderPhase('review')} disabled={!scoops}>
+        Order Sundae!
+      </button>
     </div>
   )
 }
