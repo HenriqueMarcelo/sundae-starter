@@ -83,3 +83,36 @@ test('order phases for happy path', async () => {
   const toppingsSubTotal = await screen.findByText(/toppings total/i)
   expect(toppingsSubTotal).toHaveTextContent('$0.00')
 })
+
+test('Toppings list should not appear on Order Summary page when no toppings were ordered', async () => {
+  render(<App />)
+  const user = await userEvent.setup()
+
+  const vanillaInput = await screen.findByRole('spinbutton', { name: /vanilla/i })
+  await user.type(vanillaInput, '2')
+
+  const confirmOrderButton = screen.getByRole('button', { name: /order sundae/i })
+  await user.click(confirmOrderButton)
+
+  const toppingsSummary = screen.queryByRole('heading', { name: /toppings:/i })
+  expect(toppingsSummary).not.toBeInTheDocument()
+})
+
+test('Toppings list should not appear on Order Summary page when toppings were ordered then removed', async () => {
+  render(<App />)
+  const user = await userEvent.setup()
+
+  const hotFudgeCheckbox = await screen.findByRole('checkbox', { name: /hot fudge/i })
+  user.click(hotFudgeCheckbox)
+
+  const vanillaInput = await screen.findByRole('spinbutton', { name: /vanilla/i })
+  await user.type(vanillaInput, '2')
+
+  user.click(hotFudgeCheckbox)
+
+  const confirmOrderButton = screen.getByRole('button', { name: /order sundae/i })
+  await user.click(confirmOrderButton)
+
+  const toppingsSummary = screen.queryByRole('heading', { name: /toppings:/i })
+  expect(toppingsSummary).not.toBeInTheDocument()
+})
