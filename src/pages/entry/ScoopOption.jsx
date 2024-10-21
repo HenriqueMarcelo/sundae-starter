@@ -9,23 +9,12 @@ export default function ScoopOptions({ name, imagePath }) {
 
   function handleChange(e) {
     const valueNumber = Number(e.target.value)
-    if (valueNumber > 10) {
-      setIsValid(false)
-      return
-    }
+    const isInvalid = valueNumber > 10 || valueNumber % 1 > 0 || valueNumber < 0
 
-    if (valueNumber % 1 > 0) {
-      setIsValid(false)
-      return
-    }
+    const newValue = isInvalid ? 0 : valueNumber
 
-    if (valueNumber < 0) {
-      setIsValid(false)
-      return
-    }
-
-    setIsValid(true)
-    updateItemCount(name, valueNumber, 'scoops')
+    updateItemCount(name, newValue, 'scoops')
+    setIsValid(!isInvalid)
   }
 
   return (

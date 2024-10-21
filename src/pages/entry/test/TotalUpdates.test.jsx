@@ -32,7 +32,7 @@ test('updates scoop subtotal when scoops change', async () => {
 test('Updates toppings subtotal when toopings are checked and unchecked', async () => {
   // set up
   render(<Options optionType="toppings" />)
-  const user = await userEvent.setup()
+  const user = userEvent.setup()
 
   // Asset on default toppings subtotal
   const toppingsSubtotal = screen.getByText('Toppings total', { exact: false })
@@ -111,4 +111,21 @@ describe('grand total', () => {
 
     expect(grandTotalElement).toHaveTextContent('$3.50')
   })
+})
+
+test('scoops total must not me updated is a invalid value is in input', async () => {
+  const user = userEvent.setup()
+  render(<Options optionType="scoops" />)
+
+  const vanillaInput = await screen.findByRole('spinbutton', { name: /vanilla/i })
+  await user.clear(vanillaInput)
+  await user.type(vanillaInput, '-5')
+
+  const scoopsSubtotal = screen.getByText('Scoops total: $', { exact: false })
+  expect(scoopsSubtotal).toHaveTextContent('$0.00')
+
+  await user.clear(vanillaInput)
+  await user.type(vanillaInput, '5')
+
+  expect(scoopsSubtotal).toHaveTextContent('$10.00')
 })
